@@ -1,4 +1,4 @@
-FROM redhat/ubi9:9.2-489-source
+FROM python:3.9-slim
 
 # Set the working directory inside the container
 WORKDIR /app
