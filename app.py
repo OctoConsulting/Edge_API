@@ -1,6 +1,8 @@
 from flask import Flask, request
+from flask_sock import Sock
 
 app = Flask(__name__)
+sock = Sock(app)
 
 # detection endpoints
 @app.route('/api/detection', methods=['GET'])
@@ -35,8 +37,11 @@ def send_drone():
 
 
 # TOTO CV endpoints
-@app.route('/api/toto', methods=['GET'])
-def toto_options():
+@sock.route('/api/toto', methods=['GET'])
+def toto_options(ws):
+    while True:
+        data = ws.receive()
+        ws.send(data[::-1])
     return 'drone_options'
 
 @app.route('/api/toto/getObjects', methods=['POST'])
