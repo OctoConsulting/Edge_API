@@ -1,14 +1,20 @@
 from flask import Flask, request, jsonify
 from flask_sock import Sock
+import pyaudio
+
 
 app = Flask(__name__)
 sock = Sock(app)
+
+
+
 
 # test websocket endpoint
 @sock.route('/api/test', methods=['GET'])
 def test(ws):
     while True:
         ws.send("hello world")
+
 
 ####################################################################
 
@@ -17,10 +23,29 @@ def test(ws):
 def detactions_options():
     return '***'
 
-@app.route('/api/detection/audio', methods=['POST'])
-def get_audio():
-    
-    return 'get_audio'
+@sock.route('/api/detection/audio', methods=['POST'])
+def get_audio(ws):
+    audio_format = pyaudio.paInt16
+
+    channels = 1 
+    sample_rate = 44100
+    chunk_size = 512
+
+    audio = pyaudio.PyAudio()
+
+    stream = audio.open(format=audio_format, channels=channels, rate=sample_rate, input=True, frames_per_buffer=chunk_size, input_device_index=0)
+
+    try:
+        while True:
+            data = stream.read(1024)
+            ws.send(data)
+
+        
+    except KeyboardInterrupt:
+            pass
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
 
 @app.route('/api/detection/detectShot', methods=['POST'])
 def detect_shot():
