@@ -4,6 +4,16 @@ from flask_sock import Sock
 app = Flask(__name__)
 sock = Sock(app)
 
+# test websocket endpoint
+@sock.route('/api/test', methods=['GET'])
+def toto_options(ws):
+    while True:
+        data = ws.receive()
+        ws.send(data[::-1])
+    return 'drone_options'
+
+####################################################################
+
 # detection endpoints
 @app.route('/api/detection', methods=['GET'])
 def detactions_options():

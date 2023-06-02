@@ -1,7 +1,7 @@
 import simple_websocket
 
 def main():
-    ws = simple_websocket.Client('ws://localhost:5000/api/toto')
+    ws = simple_websocket.Client('ws://localhost:5000/api/test')
     try:
         while True:
             data = input('> ')
