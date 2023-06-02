@@ -6,7 +6,7 @@ sock = Sock(app)
 
 # test websocket endpoint
 @sock.route('/api/test', methods=['GET'])
-def toto_options(ws):
+def test(ws):
     while True:
         data = ws.receive()
         ws.send(data[::-1])
