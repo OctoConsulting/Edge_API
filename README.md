@@ -59,6 +59,13 @@ Go to the project directory
   cd Edge_API
 ```
 
+```making a vitual enviroment
+
+  python -m venv .venv
+
+  .venv/bin/activate
+```
+
 Install dependencies
 
 ```bash
