@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sock import Sock
 
 app = Flask(__name__)
@@ -8,9 +8,7 @@ sock = Sock(app)
 @sock.route('/api/test', methods=['GET'])
 def test(ws):
     while True:
-        data = ws.receive()
-        ws.send(data[::-1])
-    return 'drone_options'
+        ws.send("hello world")
 
 ####################################################################
 
@@ -21,15 +19,44 @@ def detactions_options():
 
 @app.route('/api/detection/audio', methods=['POST'])
 def get_audio():
+    
     return 'get_audio'
 
 @app.route('/api/detection/detectShot', methods=['POST'])
 def detect_shot():
-    return 'detect_shot'
+    if 'file' not in request.files:
+        return 'No file part in the request'
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return 'No selected file'
+
+    # send file to shot detector
+
+    # get return and return
+
+    resp = {
+        'shot':True
+    }
+
+    return jsonify(resp)
 
 @app.route('/api/detection/getLocation', methods=['POST'])
 def get_location():
-    return 'get_location'
+    if 'file' not in request.files:
+        return 'No file part in the request'
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return 'No selected file'
+
+    # send file to audio madel
+
+    # return value
+
+    return 'File uploaded successfully'
 
 
 # drone endpoints
