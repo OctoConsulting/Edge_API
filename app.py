@@ -23,7 +23,7 @@ def test(ws):
 def detactions_options():
     return '***'
 
-@sock.route('/api/detection/audio', methods=['POST'])
+@sock.route('/api/detection/audio', methods=['GET'])
 def get_audio(ws):
     audio_format = pyaudio.paInt16
 
@@ -38,6 +38,8 @@ def get_audio(ws):
     try:
         while True:
             data = stream.read(1024)
+            print(data)
+            print('_________________________________________')
             ws.send(data)
 
         
@@ -77,6 +79,8 @@ def get_location():
     if file.filename == '':
         return 'No selected file'
 
+    # noice redection
+    
     # send file to audio madel
 
     # return value
